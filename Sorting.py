@@ -2,8 +2,8 @@ def mergesort(colorVertexMap):
     if len(colorVertexMap) == 1:
         return colorVertexMap
 
-    l1 = colorVertexMap[:len(colorVertexMap)/2]
-    l2 = colorVertexMap[len(colorVertexMap)/2:]
+    l1 = colorVertexMap[:(len(colorVertexMap)//2)]
+    l2 = colorVertexMap[(len(colorVertexMap)//2):]
 
     l1 = mergesort(l1)
     l2 = mergesort(l2)
@@ -28,3 +28,7 @@ def merge(l1, l2):
         c.append(l2[0])
         l2.remove(l2[0])
     return c
+
+map = [[None, 1],[None, 2], [None, 1],[None, 4], [None, 1],[None, 9]]
+
+print(mergesort(map))
