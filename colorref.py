@@ -1,22 +1,22 @@
 from graph1ex1 import complete_graph
 from Sorting import *
+from graphIO import *
 
 
 def colorRefinement(Graph):
     colorcoding = [None]*len(Graph.V())
-    colorcodingnew = [None]*len(Graph.V())
+    colorcodingnew = []
 
     for index,item in enumerate(Graph.V()):
         colorcoding[index] = item, len(item.nbs())
-
-    #TODO sort????!!
-    colorcoding = mergesort(colorcoding)
-    print(colorcoding)
+        item.colornum = len(item.nbs())
 
     #TODO GET LAST
     lastusedcode = len(Graph.V())
     changed = True
     while changed:
+        colorcoding = mergesort(colorcoding)
+        print(colorcoding)
         changed = False
         part = []
         used = []
@@ -29,15 +29,26 @@ def colorRefinement(Graph):
                 currentnbs = tuple[0].nbs()
                 #bereken neighbours aantal neighbours
                 for i in range(len(currentnbs)):
-                    currentnbs[i] = len(currentnbs[i].nbs())
+                    colorcd = None
+                    for x in colorcoding:
+                        if x[0] == currentnbs[i]:
+                            colorcd = x[1]
+                            break
+
+                    currentnbs[i] = colorcd
 
                 found = False
                 #voor alle items in used check if same
                 for item in used:
                     nbs = item[0].nbs()
                     for neigh in nbs:
-                        if len(neigh.nbs()) in currentnbs:
-                            currentnbs.remove(len(neigh.nbs()))
+                        colorcd = None
+                        for x in colorcoding:
+                            if x[0] == neigh:
+                                colorcd = x[1]
+                                break
+                        if colorcd in currentnbs:
+                            currentnbs.remove(colorcd)
                         else:
                             break
                     if len(currentnbs) == 0:
@@ -47,6 +58,7 @@ def colorRefinement(Graph):
                     part += [(tuple[0],lastusedcode+1)]
                     used += [(tuple[0],lastusedcode+1)]
                     lastusedcode += 1
+                    changed = True
 
             else:
                 #add part to colornew
@@ -55,10 +67,17 @@ def colorRefinement(Graph):
                 used = [tuple]
                 code = tuple[1]
             #bestaat color al in part
-
+        colorcodingnew += part
         colorcoding = colorcodingnew
+        colorcodingnew = []
 
+    for v in colorcoding:
+        v[0].colornum = v[1]
     return colorcoding
 
-#print(complete_graph(15))
-print(colorRefinement(complete_graph(15)))
+z = complete_graph(5)
+z.addvertex(5)
+vert = z.V()
+z.addedge(vert[1], vert[5])
+print(colorRefinement(z))
+writeDOT(z,'test')

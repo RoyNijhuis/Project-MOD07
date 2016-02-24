@@ -24,3 +24,11 @@ def bfs(G, s):
                 i._label = str(i._label) + " " + str(counter)
                 queue.append(i)
     return -1
+
+z = complete_graph(15)
+z.addvertex("X")
+print(z)
+b = bfs(z, z[6])
+print(b)
+print(z)
+writeDOT(z, 'visualizedGRAPH.dot', False)
