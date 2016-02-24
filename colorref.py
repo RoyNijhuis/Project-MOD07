@@ -53,8 +53,8 @@ def colorRefinement(Graph):
                             break
                     if len(currentnbs) == 0:
                         found = True
-                        part += [tuple]
-                if not found :
+                        part += [(tuple[0],item[1])]
+                if not found:
                     part += [(tuple[0],lastusedcode+1)]
                     used += [(tuple[0],lastusedcode+1)]
                     lastusedcode += 1
