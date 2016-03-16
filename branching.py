@@ -20,22 +20,43 @@ def checkIsomorphism(graph1, graph2):
 
 def branch(graph1, graph2, map1, map2):
 
+    map11 = copy.deepcopy(map1)
+    map22 = copy.deepcopy(map2)
     #Guess 2 vertices that could be twins
+    print("map1: " + str(map1.items()))
+    print("map2: " + str(map2.items()))
+
     for color, vertices in map1.items():
         if len(vertices) > 1:
             for v in vertices:
-                for v2 in map2.get(color):
-                    color = max(map1.keys())
+                for v2 in map2[color]:
+                    colorx = max(map1.keys())+1
                     oldV1Color = v.colornum
                     oldV2Color = v2.colornum
-                    map1[v.colornum].remove(v)
-                    map1[color] = map1[color] + [v]
+                    p1 = None
+                    for x in map11[v.colornum]:
+                        if x._label == v._label:
+                            p1 = x
+                            break
+                    if p1 is not None:
+                         map11[v.colornum].remove(p1)
 
-                    map2[v2.colornum].remove(v2)
-                    map2[color] = map2[color] + [v2]
+                    #map11[v.colornum].remove(v)
+                    map11[colorx] = [p1]
 
-                    v.colornum = color
-                    v2.colornum = color
+                    p2 = None
+                    for x in map22[v.colornum]:
+                        if x._label == v._label:
+                            p2 = x
+                            break
+                    if p2 is not None:
+                         map22[v.colornum].remove(p2)
+
+                    #map22[v2.colornum].remove(v2)
+                    map22[colorx] = [p2]
+
+                    p1.colornum = colorx
+                    p2.colornum = colorx
 
                     graph1copy = copy.deepcopy(graph1)
                     graph2copy = copy.deepcopy(graph2)
@@ -47,23 +68,23 @@ def branch(graph1, graph2, map1, map2):
                     if result == 1:
                         return True
                     elif result == 2:
-                        if branch(graph1, graph2, map1, map2) == True:
+                        if branch(graph1, graph2, map11, map22) == True:
                             return True
 
-                    map1[v.colornum].remove(v)
-                    map1[oldV1Color] = map1[oldV1Color] + [v]
+                    map11[p1.colornum].remove(p1)
+                    #map1[v.colornum].remove(v)
+                    map11[oldV1Color] = map11[oldV1Color] + [p1]
 
-                    map2[v2.colornum].remove(v2)
-                    map2[oldV2Color] = map2[oldV2Color] + [v2]
+                    map22[p2.colornum].remove(p2)
+                    #map2[v2.colornum].remove(v2)
+                    map22[oldV2Color] = map22[oldV2Color] + [p2]
 
-                    v.colornum = oldV1Color
-                    v2.colornum = oldV2Color
-
-
+                    p1.colornum = oldV1Color
+                    p2.colornum = oldV2Color
     return False
 
 
-G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\torus24.grl",basicgraphs.graph, True)
+G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\torus24.grl", basicgraphs.graph, True)
 P = G[0][1]
 Q = G[0][2]
 time = clock()
