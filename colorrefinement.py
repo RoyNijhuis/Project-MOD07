@@ -7,7 +7,7 @@ def colorrefine(Graph):
     colors = {}
     currentcol = 0
     for v in Graph.V():
-        if v.colornum is not None:
+        if v.colornum is None:
             v.colornum = len(v.nbs())
         if v.colornum > currentcol: currentcol = v.colornum
         if colors.get(v.colornum) is not None: colors[v.colornum] = colors.get(v.colornum) + [v]
