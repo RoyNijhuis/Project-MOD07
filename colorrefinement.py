@@ -7,7 +7,8 @@ def colorrefine(Graph):
     colors = {}
     currentcol = 0
     for v in Graph.V():
-        v.colornum = len(v.nbs())
+        if v.colornum is None:
+            v.colornum = len(v.nbs())
         if v.colornum > currentcol: currentcol = v.colornum
         if colors.get(v.colornum) is not None: colors[v.colornum] = colors.get(v.colornum) + [v]
         else: colors[v.colornum] = [v]
@@ -54,14 +55,19 @@ def colorrefine(Graph):
                 colors[v.colornum] = [v]
     return colors
 
-G = loadgraph("colorref_smallexample_2_49.grl",basicgraphs, True)
-P = G[1][0]
-Q = G[1][1]
-z = complete_graph(1000)
-vert = z.V()
-z.addedge(vert[1], vert[4])
+G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\colorref_smallexample_2_49-1.grl",basicgraphs.graph, True)
+P = G[0][0]
+Q = G[0][1]
+
 time = clock()
-print(colorrefine(z))
+print(colorrefine(P))
 time = clock() - time
 print(time)
-writeDOT(z,'test')
+
+time = clock()
+print(colorrefine(Q))
+time = clock() - time
+print(time)
+
+writeDOT(P,'test')
+writeDOT(Q,'test2')
