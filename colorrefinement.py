@@ -66,22 +66,4 @@ def isBijection(map1, map2):
             return 0
     return bool
 
-G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\colorref_smallexample_2_49-1.grl",basicgraphs.graph, True)
-P = G[0][0]
-Q = G[0][1]
 
-time = clock()
-map1 = colorrefine(P)
-print(map1)
-time = clock() - time
-print(time)
-
-time = clock()
-map2 = colorrefine(Q)
-print(map2)
-time = clock() - time
-print(time)
-
-print(isBijection(map1,map2))
-writeDOT(P,'test')
-writeDOT(Q,'test2')

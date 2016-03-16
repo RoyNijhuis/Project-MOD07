@@ -1,6 +1,7 @@
 import copy
 
 from colorrefinement import *
+from graphIO import *
 
 def checkIsomorphism(graph1, graph2):
     #Check if the graphs are a bijection, if so, the graphs are isomorphic
@@ -27,8 +28,15 @@ def branch(graph1, graph2, map1, map2):
                     color = max(map1.keys())
                     oldV1Color = v.colornum
                     oldV2Color = v2.colornum
+                    map1[v.colornum].remove(v)
+                    map1[color] = map1[color] + [v]
+
+                    map2[v2.colornum].remove(v2)
+                    map2[color] = map2[color] + [v2]
+
                     v.colornum = color
                     v2.colornum = color
+
                     graph1copy = copy.deepcopy(graph1)
                     graph2copy = copy.deepcopy(graph2)
                     refine1 = colorrefine(graph1copy)
@@ -39,7 +47,29 @@ def branch(graph1, graph2, map1, map2):
                     if result == 1:
                         return True
                     elif result == 2:
-                        branch(graph1, graph2, refine1, refine2)
+                        if branch(graph1, graph2, map1, map2) == True:
+                            return True
+
+                    map1[v.colornum].remove(v)
+                    map1[oldV1Color] = map1[oldV1Color] + [v]
+
+                    map2[v2.colornum].remove(v2)
+                    map2[oldV2Color] = map2[oldV2Color] + [v2]
 
                     v.colornum = oldV1Color
                     v2.colornum = oldV2Color
+
+
+    return False
+
+
+G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\torus24.grl",basicgraphs.graph, True)
+P = G[0][1]
+Q = G[0][2]
+time = clock()
+print(checkIsomorphism(P,Q))
+time = clock() - time
+print(time)
+
+writeDOT(P,'test')
+writeDOT(Q,'test2')
