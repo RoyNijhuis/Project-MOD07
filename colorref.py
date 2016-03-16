@@ -75,9 +75,9 @@ def colorRefinement(Graph):
         v[0].colornum = v[1]
     return colorcoding
 
-z = complete_graph(5)
-z.addvertex(5)
+z = complete_graph(10)
 vert = z.V()
-z.addedge(vert[1], vert[5])
+z.addedge(vert[1], vert[9])
+z.addedge(vert[3], vert[5])
 print(colorRefinement(z))
 writeDOT(z,'test')
