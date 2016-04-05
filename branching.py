@@ -48,10 +48,10 @@ def branch(graph1, graph2, map1, map2):
                         return True
                     elif result == 2:
                         depth += 1
-                        print("depth to: " + str(depth))
+                        #print("depth to: " + str(depth))
                         boole = branch(graph1, graph2, map11, map22)
                         depth -= 1
-                        print("depth back to: " + str(depth))
+                        #print("depth back to: " + str(depth))
                         if boole:
                             return True
 
@@ -67,14 +67,40 @@ def branch(graph1, graph2, map1, map2):
                     v2.colornum = color
     return False
 
-G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\torus24.grl", basicgraphs.graph, True)
-P = G[0][1]
-Q = G[0][0]
+
+def determineIsos(path, graphtype):
+    G = loadgraph(path, graphtype, True)
+    grouped = []
+    different = []
+    graphnumber = 0
+    for graph in G[0]:
+        print(grouped)
+        found = False
+        counter = 0
+        for diff in different:
+            if checkIsomorphism(copy.deepcopy(diff), copy.deepcopy(graph)):
+                found = True
+                grouped[counter].append(graphnumber)
+                break
+            counter += 1
+        if not found:
+            different.append(graph)
+            grouped.append([graphnumber])
+        graphnumber += 1
+
+    print("starting autos")
+    results = []
+    numb = 0
+    for dif in different:
+        results.append([grouped[numb],1])# autos(dif)])
+        numb += 1
+
+    return results
+
 depth = 0
-writeDOT(P, 'test3')
+
 time = clock()
-print(checkIsomorphism(P, Q))
-time = clock() - time
-print(time)
-writeDOT(P, 'test')
-writeDOT(Q, 'test2')
+x = determineIsos("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\cographs1.grl", mygraphs.graph)
+for l in x:
+    print(l[0], "       ", l[1])
+print(clock()-time)

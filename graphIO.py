@@ -18,6 +18,7 @@ This module also supports edge weighted graphs: edges should/will have an (integ
 # updated 5-2-2015: no black fill color used, when more than numcolors**2 vertices.
 
 import basicgraphs
+import mygraphs
 
 defaultcolorscheme="paired12"
 numcolors=12

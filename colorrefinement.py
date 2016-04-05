@@ -8,7 +8,7 @@ def colorrefine(Graph):
     currentcol = 0
     for v in Graph.V():
         if not hasattr(v, "colornum") or v.colornum is None:
-            v.colornum = len(v.nbs())
+            v.colornum = len(v.neigh)
         if v.colornum > currentcol: currentcol = v.colornum
         if colors.get(v.colornum) is not None: colors[v.colornum] = colors.get(v.colornum) + [v]
         else: colors[v.colornum] = [v]
@@ -23,13 +23,13 @@ def colorrefine(Graph):
                     vertex.colornumnew = vertex.colornum
                     continue
                 clrs = []
-                for neigh in vertex.nbs():
+                for neigh in vertex.neigh:
                     clrs += [neigh.colornum]
                 found = False
                 for vertexused in used:
                     clrscop = clrs.copy()
                     breaks = False
-                    for neigh in vertexused.nbs():
+                    for neigh in vertexused.neigh:
                         if neigh.colornum in clrscop:
                             clrscop.remove(neigh.colornum)
                         else:
@@ -65,7 +65,7 @@ def colorrefinex(Graph, Graph2):
 
     for v in (Graph.V()+Graph2.V()):
         if not hasattr(v, "colornum") or v.colornum is None:
-            v.colornum = len(v.nbs())
+            v.colornum = len(v.neigh)
         if v.colornum > currentcol: currentcol = v.colornum
         if colors.get(v.colornum) is not None: colors[v.colornum] = colors.get(v.colornum) + [v]
         else: colors[v.colornum] = [v]
@@ -86,13 +86,13 @@ def colorrefinex(Graph, Graph2):
                     vertex.colornumnew = vertex.colornum
                     continue
                 clrs = []
-                for neigh in vertex.nbs():
+                for neigh in vertex.neigh:
                     clrs += [neigh.colornum]
                 found = False
                 for vertexused in used:
                     clrscop = clrs.copy()
                     breaks = False
-                    for neigh in vertexused.nbs():
+                    for neigh in vertexused.neigh:
                         if neigh.colornum in clrscop:
                             clrscop.remove(neigh.colornum)
                         else:
