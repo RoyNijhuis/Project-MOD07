@@ -217,5 +217,5 @@ print(countauto(P))
 time = clock() - time
 print(time)
 '''
-#writeDOT(G[0][1], 'test')
+#writeDOT(G[0][1], 'test.gr')
 #writeDOT(Q, 'test2')

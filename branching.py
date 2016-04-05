@@ -2,6 +2,7 @@ import copy
 
 from colorrefinement import *
 from graphIO import *
+from automorphisms import *
 
 def checkIsomorphism(graph1, graph2):
     #Check if the graphs are a bijection, if so, the graphs are isomorphic
@@ -78,7 +79,8 @@ def determineIsos(path, graphtype):
     results = []
     numb = 0
     for dif in different:
-        results.append([grouped[numb],1])# autos(dif)])
+        autos = checkNumberOfAutomorphismsOneGraph(dif)
+        results.append([grouped[numb],autos])# autos(dif)])
         numb += 1
 
     return results
@@ -86,7 +88,7 @@ def determineIsos(path, graphtype):
 depth = 0
 
 time = clock()
-x = determineIsos("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\cographs1.grl", mygraphs.graph)
+x = determineIsos("C:\Code\Python\Project-MOD07\\torus72.grl", mygraphs.graph)
 for l in x:
     print(l[0], "       ", l[1])
 print(clock()-time)
