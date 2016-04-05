@@ -19,57 +19,43 @@ def checkIsomorphism(graph1, graph2):
 
 def branch(graph1, graph2, map1, map2):
     global depth
-    map11 = copy.copy(map1)
-    map22 = copy.copy(map2)
-    #Guess 2 vertices that could be twins
-    #print("map1: " + str(map1.items()))
-    #print("map2: " + str(map2.items()))
-
     for color, vertices in map1.items():
         if len(vertices) > 1:
             for v in vertices:
+                print(depth, "", len(map2[color]))
                 for v2 in map2[color]:
                     colorx = max(map1.keys())+1
-                    map11[color].remove(v)
-                    map11[colorx] = [v]
-                    map22[color].remove(v2)
-
-                    map22[colorx] = [v2]
 
                     v.colornum = colorx
                     v2.colornum = colorx
 
                     graph1copy = copy.deepcopy(graph1)
                     graph2copy = copy.deepcopy(graph2)
+                    #print("refine :", v, ",",v2)
                     refine1, refine2 = colorrefinex(graph1copy, graph2copy)
                     result = isBijection(refine1, refine2)
+                    #print("bijection result:", result)
                     #print(str(result) + "refine 1 : " + str(refine1) + "\n refine 2 : " + str(refine2))
                     if result == 1:
                         return True
                     elif result == 2:
                         depth += 1
-                        #print("depth to: " + str(depth))
-                        boole = branch(graph1, graph2, map11, map22)
+                        print("depth to: " + str(depth))
+                        boole = branch(graph1copy, graph2copy, refine1, refine2)
                         depth -= 1
                         #print("depth back to: " + str(depth))
                         if boole:
                             return True
 
-                    map11[v.colornum].remove(v)
-                    #map1[v.colornum].remove(v)
-                    map11[color] = map11[color] + [v]
-
-                    map22[v2.colornum].remove(v2)
-                    #map2[v2.colornum].remove(v2)
-                    map22[color] = map22[color] + [v2]
-
                     v.colornum = color
                     v2.colornum = color
+                return False
     return False
 
 
 def determineIsos(path, graphtype):
     G = loadgraph(path, graphtype, True)
+    writeDOT(G[0][0], 'test2')
     grouped = []
     different = []
     graphnumber = 0
