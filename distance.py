@@ -10,7 +10,11 @@ def distances(graph):
     maxi = 0
     for vertex in graph.V():
         if not hasattr(vertex, "colornum"):
-            vertex.colornum = len(vertex.neigh)
+            if hasattr(vertex, "neigh"):
+                vertex.colornum = len(vertex.neigh)
+            else:
+                vertex.neigh = []
+                vertex.colornum = 0
         if vertex.colornum is None:
             vertex.colornum = len(vertex.neigh)
         if vertex.colornum > maxi:

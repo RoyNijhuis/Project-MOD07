@@ -32,7 +32,7 @@ while not valid:
     else:
         valid = True
         path = "C:\\Users\\Roy-Laptop\\Desktop\\Basic tests\\basicGIAut.grl"
-        auto = True
+        auto = False
         alg = 0
         if alg == 0:
             output = branching.determineIsos(path, mygraphs.graph, auto)

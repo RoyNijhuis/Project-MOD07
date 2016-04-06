@@ -23,7 +23,7 @@ def branch(graph1, graph2, map1, map2):
     for color, vertices in map1.items():
         if len(vertices) > 1:
             for v in vertices:
-                print(depth, "", len(map2[color]))
+                #print(depth, "", len(map2[color]))
                 for v2 in map2[color]:
                     colorx = max(map1.keys())+1
 
@@ -41,7 +41,7 @@ def branch(graph1, graph2, map1, map2):
                         return True
                     elif result == 2:
                         depth += 1
-                        print("depth to: " + str(depth))
+                        #print("depth to: " + str(depth))
                         boole = branch(graph1copy, graph2copy, refine1, refine2)
                         depth -= 1
                         #print("depth back to: " + str(depth))
@@ -56,12 +56,12 @@ def branch(graph1, graph2, map1, map2):
 
 def determineIsos(path, graphtype, auto):
     G = loadgraph(path, graphtype, True)
-    writeDOT(G[0][0], 'test2')
+    #writeDOT(G[0][0], 'test2')
     grouped = []
     different = []
     graphnumber = 0
     for graph in G[0]:
-        print(grouped)
+        #print(grouped)
         found = False
         counter = 0
         for diff in different:
