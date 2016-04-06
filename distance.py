@@ -118,7 +118,7 @@ def determineIsos(path, graphtype, auto):
                 for v in groupe:
                     v.colornum = numbcol
                 numbcol += 1
-            autos = checkNumberOfAutomorphismsOneGraph2(dif)
+            autos = checkNumberOfAutomorphismsOneGraph(dif)
             results.append([grouped[numb],autos])# autos(dif)])
 
             numb += 1
