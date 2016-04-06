@@ -78,7 +78,7 @@ def compare(graph1, graph2):
     return True
 
 
-def determineIsos(path, graphtype):
+def determineIsos(path, graphtype, auto):
     G = loadgraph(path, graphtype, True)
     grouped = []
     different = []
@@ -97,33 +97,32 @@ def determineIsos(path, graphtype):
             different.append(graph)
             grouped.append([graphnumber])
         graphnumber += 1
-
-    print("starting autos")
-    results = []
-    numb = 0
-    for dif in different:
-        groupeds = []
-        for v in dif.V():
-            v.list.sort(key=lambda tup: (tup[2], tup[1], tup[0]))
-            found = False
-            for i in groupeds:
-                if i[0].list == v.list:
-                    found = True
-                    i += [v]
-                    break
-            if not found:
-                groupeds.append([v])
-        numbcol = 0
-        for groupe in groupeds:
-            for v in groupe:
-                v.colornum = numbcol
-            numbcol += 1
-        autos = checkNumberOfAutomorphismsOneGraph2(dif)
-        results.append([grouped[numb],autos])# autos(dif)])
-        print(results)
-        numb += 1
-
-    return results
+    if auto:
+        print("starting autos")
+        results = []
+        numb = 0
+        for dif in different:
+            groupeds = []
+            for v in dif.V():
+                v.list.sort(key=lambda tup: (tup[2], tup[1], tup[0]))
+                found = False
+                for i in groupeds:
+                    if i[0].list == v.list:
+                        found = True
+                        i += [v]
+                        break
+                if not found:
+                    groupeds.append([v])
+            numbcol = 0
+            for groupe in groupeds:
+                for v in groupe:
+                    v.colornum = numbcol
+                numbcol += 1
+            autos = checkNumberOfAutomorphismsOneGraph2(dif)
+            results.append([grouped[numb],autos])# autos(dif)])
+            numb += 1
+        return results
+    else: return grouped
 
 automorphs = 0
 def auto(graph):
@@ -238,36 +237,3 @@ def comparelists2(list1, list2):
     if biject:
         result = 2
     return result
-
-
-time = clock()
-x = determineIsos("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\products72.grl", mygraphs.graph)
-for l in x:
-    print(l[0], "       ", l[1])
-print(clock()-time)
-
-
-
-#G = loadgraph("C:\\Users\Edwin\\PycharmProjects\\Project-MOD07\\torus24.grl", mygraphs.graph, True)
-'''
-P = G[0][2]
-Q = G[0][3]
-time2 = clock()
-distances(P)
-time2 = clock() - time2
-print("time distance(): ",time2)
-time = clock()
-distances(Q)
-time = clock() - time
-print(time)
-time = clock()
-print(compare(P, Q))
-time = clock() - time
-print(time)
-time = clock()
-print(countauto(P))
-time = clock() - time
-print(time)
-'''
-#writeDOT(G[0][1], 'test.gr')
-#writeDOT(Q, 'test2')

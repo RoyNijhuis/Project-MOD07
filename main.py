@@ -1,11 +1,12 @@
 from graphIO import *
 from branching import *
+import distance
 
 valid = False
 
 while not valid:
     path = input("Please enter the path of the file...")
-
+    alg = input("normal or other? 0 / 1")
     done = False
     auto = False
     while not done:
@@ -18,7 +19,10 @@ while not valid:
             auto = False
 
     try:
-        output = determineIsos(path, mygraphs.graph, auto)
+        if alg == 0:
+            output = determineIsos(path, mygraphs.graph, auto)
+        else:
+            output = distance.determineIsos(path, mygraphs.graph, auto)
         valid = True
     except FileNotFoundError:
         print("Please enter a valid path...")
