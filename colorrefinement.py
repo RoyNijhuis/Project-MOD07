@@ -65,7 +65,11 @@ def colorrefinex(Graph, Graph2):
 
     for v in (Graph.V()+Graph2.V()):
         if not hasattr(v, "colornum") or v.colornum is None:
-            v.colornum = len(v.neigh)
+            if hasattr(v, "neigh"):
+                v.colornum = len(v.neigh)
+            else:
+                v.colornum = 0
+                v.neigh = []
         if v.colornum > currentcol: currentcol = v.colornum
         if colors.get(v.colornum) is not None: colors[v.colornum] = colors.get(v.colornum) + [v]
         else: colors[v.colornum] = [v]

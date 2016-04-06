@@ -31,7 +31,7 @@ while not valid:
             print("Please enter a valid path...")
     else:
         valid = True
-        path = "C:\\Users\Edwin\PycharmProjects\Project-MOD07\\cubes5.grl"
+        path = "C:\\Users\\Roy-Laptop\\Desktop\\Basic tests\\basicGIAut.grl"
         auto = True
         alg = 0
         if alg == 0:
