@@ -80,7 +80,7 @@ def determineIsos(path, graphtype, auto):
         results = []
         numb = 0
         for dif in different:
-            autos = checkNumberOfAutomorphismsOneGraph(dif)
+            autos = checkNumberOfAutomorphismsOneGraph2(dif)
             results.append([grouped[numb],autos])# autos(dif)])
             numb += 1
     else:
