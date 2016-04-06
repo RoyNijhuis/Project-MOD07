@@ -13,8 +13,10 @@ def checkNumberOfAutomorphisms(graphOriginal, graphImage):
     global automorphisms
     originalMap, imageMap = colorrefinex(graphOriginal, graphImage)
 
+    found = False
     for color, vertices in originalMap.items():
         if len(vertices) > 1:
+            found = True
             for vertex in imageMap[color]:
                 newColor = max(originalMap.keys())+1
 
@@ -37,8 +39,8 @@ def checkNumberOfAutomorphisms(graphOriginal, graphImage):
                 vertices[0].colornum = color
                 vertex.colornum = color
             break
-
-        return 1
+    if not found:
+        automorphisms.append([1])
     return len(automorphisms)
 
 
