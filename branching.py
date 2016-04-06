@@ -54,7 +54,7 @@ def branch(graph1, graph2, map1, map2):
     return False
 
 
-def determineIsos(path, graphtype):
+def determineIsos(path, graphtype, auto):
     G = loadgraph(path, graphtype, True)
     writeDOT(G[0][0], 'test2')
     grouped = []
@@ -75,20 +75,17 @@ def determineIsos(path, graphtype):
             grouped.append([graphnumber])
         graphnumber += 1
 
-    print("starting autos")
-    results = []
-    numb = 0
-    for dif in different:
-        autos = checkNumberOfAutomorphismsOneGraph(dif)
-        results.append([grouped[numb],autos])# autos(dif)])
-        numb += 1
+    if auto:
+        print("starting autos")
+        results = []
+        numb = 0
+        for dif in different:
+            autos = checkNumberOfAutomorphismsOneGraph(dif)
+            results.append([grouped[numb],autos])# autos(dif)])
+            numb += 1
+    else:
+        return grouped
 
     return results
 
 depth = 0
-
-time = clock()
-x = determineIsos("C:\Code\Python\Project-MOD07\\torus72.grl", mygraphs.graph)
-for l in x:
-    print(l[0], "       ", l[1])
-print(clock()-time)
